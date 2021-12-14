@@ -8,10 +8,12 @@ public class CardScript : MonoBehaviour
     SpriteRenderer myRenderer;
     public Sprite back;
     public Sprite front;
+    GameObject myGameManager;
 
     private void Awake()
     {
         myRenderer = GetComponent<SpriteRenderer>();
+        myGameManager = GameObject.FindGameObjectWithTag("GameController");
     }
 
     // Start is called before the first frame update
