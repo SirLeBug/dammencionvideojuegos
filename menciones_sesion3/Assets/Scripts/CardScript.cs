@@ -45,7 +45,8 @@ public class CardScript : MonoBehaviour
 
     void OnMouseDown()
     {
-        Debug.Log("He hecho click en la carta");
+        myGameManager.GetComponent<GameManagerScript>().ClickOnCard(name);
+
         if (frontal)
         {
             myRenderer.sprite = back;

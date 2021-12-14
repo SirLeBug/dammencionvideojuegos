@@ -72,6 +72,11 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
+    public void ClickOnCard(string name)
+    {
+        Debug.Log("Clicked " + name);
+    }
+
     // Update is called once per frame
     void Update()
     {
