@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //Ejercicio 2
 public class GameManagerScript : MonoBehaviour
 {
     public GameObject myPrefab;
+    public GameObject texto;
     public List<GameObject> listOfCards = new List<GameObject>();
     public int x = -8;
     public int y = 3;
@@ -18,11 +20,13 @@ public class GameManagerScript : MonoBehaviour
     int state = 0;
     int priorType;
     int priorIndex;
+    int numParejas = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0; i < 10; i++)
+
+        for (int i = 0; i < 10; i++)
         {
             if (i == 5)
             {
@@ -78,6 +82,8 @@ public class GameManagerScript : MonoBehaviour
                 x += 3;
             }
         }
+
+        texto.GetComponent<Text>().text = "Num. Parejas: 0";
     }
 
     public void ClickOnCard(int t, int index)
@@ -88,6 +94,8 @@ public class GameManagerScript : MonoBehaviour
             if(t == priorType)
             {
                 Debug.Log("PAREJA!");
+                numParejas++;
+                texto.GetComponent<Text>().text = "Num. Parejas: " + numParejas;
                 //StartCoroutine(WaitAndPrint());
                 listOfCards[index].SetActive(false);
                 listOfCards[priorIndex].SetActive(false);
