@@ -88,6 +88,7 @@ public class GameManagerScript : MonoBehaviour
             if(t == priorType)
             {
                 Debug.Log("PAREJA!");
+                //StartCoroutine(WaitAndPrint());
                 listOfCards[index].SetActive(false);
                 listOfCards[priorIndex].SetActive(false);
                 //Destroy(listOfCards[index]);
@@ -96,8 +97,9 @@ public class GameManagerScript : MonoBehaviour
             else
             {
                 Debug.Log("No es pareja");
-                listOfCards[index].GetComponent<CardScript>().Toggle();
-                listOfCards[priorIndex].GetComponent<CardScript>().Toggle();
+                StartCoroutine(WaitAndPrint(index));
+                //listOfCards[index].GetComponent<CardScript>().Toggle();
+                //listOfCards[priorIndex].GetComponent<CardScript>().Toggle();
             }
             state = 0;
         }
@@ -108,6 +110,15 @@ public class GameManagerScript : MonoBehaviour
             state = 1;
         }
         
+    }
+
+    IEnumerator WaitAndPrint(int i)
+    {
+        Debug.Log("Antes del waitforseconds");
+        yield return new WaitForSeconds(2);
+        listOfCards[i].GetComponent<CardScript>().Toggle();
+        listOfCards[priorIndex].GetComponent<CardScript>().Toggle();
+        Debug.Log("Despues del waitforseconds");
     }
 
     // Update is called once per frame
