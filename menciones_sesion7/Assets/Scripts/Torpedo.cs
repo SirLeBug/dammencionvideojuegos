@@ -23,8 +23,13 @@ public class Torpedo : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("He colisionado con " + collision.gameObject.name);
+        Debug.Log("He colisionado con " + collision.gameObject.tag);
         scriptNave.SetCanShot();
         Destroy(gameObject);
+        if (collision.gameObject.tag == "enemy")
+        {
+            scriptNave.SetEnd();
+            scriptNave.SetTexto();
+        }
     }
 }

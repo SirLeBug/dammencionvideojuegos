@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpaceShipScript : MonoBehaviour
 {
@@ -56,13 +57,25 @@ public class SpaceShipScript : MonoBehaviour
         canShot = true;
     }
 
+    public void SetEnd()
+    {
+        end = true;
+        canShot = false;
+    }
+
+    public void SetTexto()
+    {
+        
+        texto.GetComponent<Text>().text = "You Win";
+        texto.SetActive(true);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
         if (collision.gameObject.tag == "enemy")
         {
-            end = true;
-            canShot = false;
+            SetEnd();
             texto.SetActive(true);
         }
         
