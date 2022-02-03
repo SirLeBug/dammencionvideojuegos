@@ -9,50 +9,62 @@ public class SpaceShipScript : MonoBehaviour
     public int forceTorpedo;
     Rigidbody2D myRB;
     bool canShot = true;
+    bool end = false;
 
     public GameObject torpedo;
+    GameObject texto;
 
     // Start is called before the first frame update
     void Start()
     {
         myRB = GetComponent<Rigidbody2D>();
+        texto = GameObject.FindGameObjectWithTag("Finish");
+        texto.SetActive(false);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        float movement = Input.GetAxis("Horizontal");
-
-        //if(movement != 0)
-        //{
-           //transform.Translate(movement, 0, 0);
-        //}
-
-        myRB.velocity = transform.right * movement * force;
-
-        float xPos = Mathf.Clamp(myRB.position.x, -3.12f, 3.12f);
-
-        myRB.position = new Vector2(xPos, transform.position.y);
-
-        if (Input.GetButton("Jump") && canShot)
+        if (!end)
         {
-            GameObject clone = Instantiate(torpedo, new Vector2(transform.position.x, -1.48f), Quaternion.identity);
+            float movement = Input.GetAxis("Horizontal");
 
-            Rigidbody2D cloneRB = clone.GetComponent<Rigidbody2D>();
+            myRB.velocity = transform.right * movement * force;
 
-            Vector2 direccion = new Vector2(0f, 1f);
+            float xPos = Mathf.Clamp(myRB.position.x, -3.12f, 3.12f);
 
-            cloneRB.AddForce(direccion * forceTorpedo);
+            myRB.position = new Vector2(xPos, transform.position.y);
 
-            canShot = false;
-        }
+            if (Input.GetButton("Jump") && canShot)
+            {
+                GameObject clone = Instantiate(torpedo, new Vector2(transform.position.x, -1.48f), Quaternion.identity);
 
-        
+                Rigidbody2D cloneRB = clone.GetComponent<Rigidbody2D>();
+
+                Vector2 direccion = new Vector2(0f, 1f);
+
+                cloneRB.AddForce(direccion * forceTorpedo);
+
+                canShot = false;
+            }
+        }  
 
     }
 
     public void SetCanShot()
     {
         canShot = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        if (collision.gameObject.tag == "enemy")
+        {
+            end = true;
+            canShot = false;
+            texto.SetActive(true);
+        }
+        
     }
 }

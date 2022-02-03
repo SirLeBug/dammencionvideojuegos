@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     Rigidbody2D myRB;
     bool toright = false;
     float sleep = 0.8f;
+    bool canMove = true;
 
     // Start is called before the first frame update
     void Start()
@@ -30,47 +31,57 @@ public class Enemy : MonoBehaviour
     }
     void MoveEnemy()
     {
-
-        if (!toright)
+        if (canMove)
         {
-            if (myRB.position.x >= 3)
+            if (!toright)
             {
-                toright = true;
-                if (sleep > 0.1f)
+                if (myRB.position.x >= 3)
                 {
-                    sleep -= 0.05f;
+                    toright = true;
+                    if (sleep > 0.1f)
+                    {
+                        sleep -= 0.05f;
+                    }
+                    transform.Translate(Vector2.down);
                 }
-                transform.Translate(Vector2.down);
-            } 
-            else
-            {
-                transform.Translate(Vector2.right);
-            }
-        }
-        else
-        {
-            if (myRB.position.x <= -3)
-            {
-                toright = false;
-                if (sleep > 0.1f)
+                else
                 {
-                    sleep -= 0.05f;
+                    transform.Translate(Vector2.right);
                 }
-                transform.Translate(Vector2.down);
             }
             else
             {
-                transform.Translate(Vector2.left);
+                if (myRB.position.x <= -3)
+                {
+                    toright = false;
+                    if (sleep > 0.1f)
+                    {
+                        sleep -= 0.05f;
+                    }
+                    transform.Translate(Vector2.down);
+                }
+                else
+                {
+                    transform.Translate(Vector2.left);
+                }
             }
         }
+        
 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "rocket")
+        if (collision.gameObject.tag == "rocket")
         {
             Destroy(gameObject);
+        } 
+        else
+        {
+            if (collision.gameObject.tag == "Player")
+            {
+                canMove = false;
+            }
         }
     }
 }
